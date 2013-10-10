@@ -1,0 +1,35 @@
+{% from "beaver/map.jinja" import defaults with context -%}
+{% set transport = salt['pillar.get']('beaver:transport', defaults.transport) -%}
+
+# Managed by Salt.
+[beaver]
+{% set format = salt['pillar.get']('beaver:format', defaults.format) %}
+transport: {{ transport }}
+format: {{ format }}
+sincedb_path: {{ salt['pillar.get']('beaver:sincedb_path', defaults.sincedb_path) }}
+
+{% if transport == 'tcp' -%}
+# TCP Output Settings
+tcp_host: {{ salt['pillar.get']('beaver:tcp_host', defaults.tcp_host) }}
+tcp_port: {{ salt['pillar.get']('beaver:tcp_port', defaults.tcp_port) }}
+
+{% elif transport == 'udp' -%}
+# UDP Output Settings
+udp_host: {{ salt['pillar.get']('beaver:udp_host', defaults.udp_host) }}
+udp_port: {{ salt['pillar.get']('beaver:udp_port', defaults.udp_port) }}
+
+{% elif transport == 'redis' -%}
+# Redis Output Settings
+redis_url: {{ salt['pillar.get']('beaver:redis_url', defaults.redis_url) }}
+redis_password:  {{ salt['pillar.get']('beaver:redis_password', defaults.redis_password) }}
+redis_namespace: {{ salt['pillar.get']('beaver:redis_namespace', defaults.redis_namespace) }}
+
+{% endif -%}
+
+# Monitored Files:
+{% for name, fields in salt['pillar.get']('beaver:files', {}).items() %}
+[{{ name }}]:
+format: {{ fields.get('format', format) }}
+type: {{ fields.get('type', 'unknown') }}
+{% if fields.get('tags', []) %}tags: {{ ", ".join(fields.get('tags', [])) }}{% endif %}
+{% endfor %}

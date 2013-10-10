@@ -1,0 +1,16 @@
+{% set defaults = {
+    'format': 'raw',
+    'transport': 'stdout',
+    'sincedb_path': '/var/cache/beaver/sincedb.sqlite',
+
+    'tcp_host': '127.0.0.1',
+    'tcp_port': '9999',
+
+    'udp_host': '127.0.0.1',
+    'udp_port': '9999',
+
+    'redis_url': 'redis://localhost:6379/0',
+    'redis_password': '',
+    'redis_namespace': 'logstash:beaver'
+
+} %}

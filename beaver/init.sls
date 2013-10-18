@@ -12,15 +12,17 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 #
+
+# We should have packages fron http://ppa.launchpad.net/kiall/beaver/
+# in an internal apt repo:
+# beaver_30-3_all.deb
+# python-beaver_30-3_all.deb
+# python-conf-d_0.0.3-1_all.deb
+# python-glob2_0.3-1_all.deb
+
 beaver:
-  pkgrepo:
-    - managed
-    - ppa: kiall/beaver
-    - enabled: true
   pkg:
     - latest
-    - require:
-      - pkgrepo: beaver
   service:
     - running
     - watch:

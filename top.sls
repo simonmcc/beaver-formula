@@ -15,3 +15,4 @@
 base:
   '*':
     - beaver
+    - beaver.ppa

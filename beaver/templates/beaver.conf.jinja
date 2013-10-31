@@ -6,12 +6,15 @@
 {% set format = salt['pillar.get']('beaver:format', defaults.format) %}
 transport: {{ transport }}
 format: {{ format }}
+logstash_version: {{ salt['pillar.get']('beaver:logstash_version', defaults.logstash_version) }}
 sincedb_path: {{ salt['pillar.get']('beaver:sincedb_path', defaults.sincedb_path) }}
 
 {% if transport == 'tcp' -%}
 # TCP Output Settings
 tcp_host: {{ salt['pillar.get']('beaver:tcp_host', defaults.tcp_host) }}
 tcp_port: {{ salt['pillar.get']('beaver:tcp_port', defaults.tcp_port) }}
+tcp_ssl_enabled: {{ salt['pillar.get']('beaver:tcp_ssl_enable', defaults.tcp_ssl_enable) }}
+tcp_ssl_verify: {{ salt['pillar.get']('beaver:tcp_ssl_verify', defaults.tcp_ssl_verify) }}
 
 {% elif transport == 'udp' -%}
 # UDP Output Settings
@@ -29,7 +32,6 @@ redis_namespace: {{ salt['pillar.get']('beaver:redis_namespace', defaults.redis_
 # Monitored Files:
 {% for name, fields in salt['pillar.get']('beaver:files', {}).items() %}
 [{{ name }}]:
-format: {{ fields.get('format', format) }}
 type: {{ fields.get('type', 'unknown') }}
 {% if fields.get('tags', []) %}tags: {{ ", ".join(fields.get('tags', [])) }}{% endif %}
 {% endfor %}

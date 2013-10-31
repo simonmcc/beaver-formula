@@ -1,10 +1,13 @@
 {% set defaults = {
     'format': 'raw',
     'transport': 'stdout',
+    'logstash_version': '0',
     'sincedb_path': '/var/cache/beaver/sincedb.sqlite',
 
     'tcp_host': '127.0.0.1',
     'tcp_port': '9999',
+    'tcp_ssl_enable': True,
+    'tcp_ssl_verify': False,
 
     'udp_host': '127.0.0.1',
     'udp_port': '9999',

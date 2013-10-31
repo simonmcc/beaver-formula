@@ -1,6 +1,10 @@
 beaver:
   format: json
-  transport: stdout
+  transport: tcp
+  logstash_version: 1
+  tcp_host: 192.168.35.30
+  tcp_port: 5959
+  tcp_ssl_enabled: True
 
   files:
     /var/log/syslog:

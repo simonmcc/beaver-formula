@@ -12,8 +12,10 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 #
-beaver:
+ppa:
   pkgrepo:
     - managed
     - ppa: kiall/beaver
     - enabled: true
+    - require_in:
+      - pkg: beaver

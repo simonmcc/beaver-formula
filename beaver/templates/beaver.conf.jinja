@@ -8,6 +8,7 @@ transport: {{ transport }}
 format: {{ format }}
 logstash_version: {{ salt['pillar.get']('beaver:logstash_version', defaults.logstash_version) }}
 sincedb_path: {{ salt['pillar.get']('beaver:sincedb_path', defaults.sincedb_path) }}
+hostname: {{ salt['pillar.get']('beaver:hostname', grains.get('host', 'localhost')) }}
 
 {% if transport == 'tcp' -%}
 # TCP Output Settings

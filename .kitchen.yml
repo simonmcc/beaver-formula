@@ -1,0 +1,35 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: salt_solo
+  formula: beaver
+  pillars:
+  state_top:
+    base:
+      '*':
+        - beaver
+        - beaver.ppa
+
+platforms:
+  - name: ubuntu-12.04
+
+suites:
+  - name: default
+
+  - name: default_0162
+    provisioner:
+      salt_version: 0.16.2
+      salt_install: apt
+
+  - name: tcp-output
+    provisioner:
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - beaver
+        beaver.sls:
+          beaver:
+            transport: tcp

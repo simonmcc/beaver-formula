@@ -1,0 +1,30 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: salt_solo
+  formula: beaver
+
+platforms:
+  - name: ubuntu-12.04-cloudimg
+    driver_config:
+      box: ubuntu-12.04-cloudimg
+      box_url: http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-vagrant-amd64-disk1.box
+
+suites:
+  - name: default
+    attributes:
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - beaver
+        beaver.sls:
+          beaver:
+            transport: tcp
+      state_top:
+        base:
+          '*':
+            - beaver
+            - beaver.ppa

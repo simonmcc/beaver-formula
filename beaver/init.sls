@@ -15,14 +15,16 @@
 
 # We should have packages fron http://ppa.launchpad.net/kiall/beaver/
 # in an internal apt repo:
-# beaver_30-3_all.deb
-# python-beaver_30-3_all.deb
-# python-conf-d_0.0.3-1_all.deb
-# python-glob2_0.3-1_all.deb
+# beaver_30.33-2_all.deb
+# python-beaver_30.33-2_all.deb
 
 beaver:
   pkg:
-    - latest
+    - installed
+{% set beaver_version = salt['pillar.get']('beaver:version', False) -%}
+{% if beaver_version -%}
+    - version: {{ beaver_version }}
+{% endif %}
   service:
     - running
     - watch:

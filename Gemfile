@@ -5,5 +5,6 @@ source 'https://rubygems.org'
 # pull it from github
 gem "test-kitchen", '1.1.2.dev', :git => 'https://github.com/test-kitchen/test-kitchen.git'
 gem "kitchen-vagrant"
-gem "kitchen-lxc"
+gem "kitchen-ec2", '0.7.1.dev', :git => 'https://github.com/test-kitchen/kitchen-ec2'
+gem "unf"
 gem "kitchen-salt", '~>0.0.4'

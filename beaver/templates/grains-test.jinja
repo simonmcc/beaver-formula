@@ -1,0 +1,13 @@
+
+use_lvm: {{ salt['grains.get']('openstack:use_lvm', False) }}
+use_lvm: {{ salt['pillar.get']('openstack:use_lvm', False) }}
+use_lvm: {{ salt['pillar.get']('openstack:use_lvm_string', 'False') }}
+use_lvm: {{ salt['pillar.get']('openstack:use_something', 'idunno') }}
+
+{% if salt['pillar.get']('openstack:use_lvm', False) == 'True' %}
+salt['pillar.get']('openstack:use_lvm', False) = 'True'
+{% endif %}
+
+{% if salt['pillar.get']('openstack:use_lvm', False) == True %}
+salt['pillar.get']('openstack:use_lvm', False) = True
+{% endif %}

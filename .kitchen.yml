@@ -17,6 +17,8 @@ platforms:
 
 suites:
   - name: default
+    provisioner:
+      salt_version: 2014.1.0
 
   - name: default_0162
     provisioner:
@@ -25,6 +27,7 @@ suites:
 
   - name: tcp-output
     provisioner:
+      salt_version: 0.16.2
       pillars:
         top.sls:
           base:
@@ -33,3 +36,63 @@ suites:
         beaver.sls:
           beaver:
             transport: tcp
+
+  - name: tcp-output-external-pillar
+    provisioner:
+      salt_version: 0.16.2
+      pillars-from-files:
+        beaver.sls: beaver-example.sls
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - beaver
+
+  - name: load-vagrant-data
+    provisioner:
+      salt_version: 0.16.2
+      salt_pillar_root: /data/pillar
+      data_path: ../external-pillar-root/
+
+  - name: set-grains-test
+    provisioner:
+      salt_install: apt
+      salt_version: 0.16.2
+      grains:
+        roles:
+          - webserver
+          - memcache
+        deployment: datacenter4
+        cabinet: 13
+        cab_u: 14-15
+        openstack:
+          use_lvm: true
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - beaver
+        beaver.sls:
+          beaver:
+            transport: tcp
+          openstack:
+            use_lvm: True
+            use_lvm_string: 'True'
+            use_something: True
+      state_top:
+        base:
+          '*':
+            - beaver.grains-test
+
+  - name: use-development-branch-salt
+    provisioner:
+      salt_bootstrap_options: -M -N git develop
+
+  - name: use-top-from-disk
+    provisioner:
+      state_top_from_file: true
+
+  - name: test-copy-filter
+    provisioner:
+      salt_copy_filter:
+        - beaver

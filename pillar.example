@@ -1,0 +1,4 @@
+# defaults are set in map.jinja and can be over-ridden like this
+beaver:
+  transport: stdout
+  format: json

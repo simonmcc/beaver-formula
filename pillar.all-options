@@ -1,0 +1,28 @@
+# defaults are set in map.jinja and can be over-ridden like this
+beaver:
+  transport: tcp
+  version: x.y
+  format: raw
+  logstash_version:
+  sincedb_path:
+  hostname:
+
+# files to watch
+  files:
+    /path/to/some-file
+
+# options for tcp transport
+  tcp_host:
+  tcp_port:
+  tcp_ssl_enable:
+  tcp_ssl_verify:
+
+# options for udp transport
+  udp_host:
+  udp_port:
+
+# options for redis transport
+  redis_url:
+  redis_password:
+  redis_namespace:
+

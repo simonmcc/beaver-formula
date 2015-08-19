@@ -1,11 +1,23 @@
 ---
 driver:
-  name: vagrant
+  name: ec2
+  shared_credentials_profile: jobdoneright
+  aws_ssh_key_id: jobdoneright
+  region: eu-west-1
+  availability_zone: b
+  instance_type: m1.small
+  interface: dns
+
+transport:
+  ssh_key: ~/.ssh/jobdoneright.pem
 
 provisioner:
   name: salt_solo
+  # workaround for https://github.com/saltstack/salt-bootstrap/issues/632
+  # python-requests : Depends: python-urllib3 (>= 1.7.1) but it is not installable
+  salt_bootstrap_url: https://bootstrap.saltstack.com/develop
+  salt_bootstrap_options: -P
   formula: beaver
-  pillars:
   state_top:
     base:
       '*':
@@ -33,3 +45,31 @@ suites:
         beaver.sls:
           beaver:
             transport: tcp
+
+  - name: json-out
+    provisioner:
+      pillars-from-files:
+        beaver.sls: pillar.example
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - beaver
+
+  - name: dependencies
+    provisioner:
+      # workaround for https://github.com/saltstack/salt-bootstrap/issues/632
+      # python-requests : Depends: python-urllib3 (>= 1.7.1) but it is not installable
+      salt_bootstrap_url: https://bootstrap.saltstack.com/develop
+      salt_bootstrap_options: -P
+      dependencies:
+        - name: elasticsearch
+          path: ../elasticsearch-formula
+
+  - name: vendor_path
+    provisioner:
+      vendor_path: ../sample-vendor-path
+
+  - name: bad_vendor_path
+    provisioner:
+      vendor_path: ../missing-sample-vendor-path

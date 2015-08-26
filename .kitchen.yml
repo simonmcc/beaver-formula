@@ -1,15 +1,6 @@
 ---
 driver:
-  name: ec2
-  shared_credentials_profile: jobdoneright
-  aws_ssh_key_id: jobdoneright
-  region: eu-west-1
-  availability_zone: b
-  instance_type: m1.small
-  interface: dns
-
-transport:
-  ssh_key: ~/.ssh/jobdoneright.pem
+  name: vagrant
 
 provisioner:
   name: salt_solo

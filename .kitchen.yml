@@ -17,14 +17,11 @@ provisioner:
 
 platforms:
   - name: ubuntu-12.04
+    # t1.micro, Ubuntu 12.04,
+    image_id: ami-e893299b
 
 suites:
   - name: default
-
-  - name: default_0162
-    provisioner:
-      salt_version: 0.16.2
-      salt_install: apt
 
   - name: tcp-output
     provisioner:
@@ -47,20 +44,21 @@ suites:
             '*':
               - beaver
 
-  - name: dependencies
-    provisioner:
-      # workaround for https://github.com/saltstack/salt-bootstrap/issues/632
-      # python-requests : Depends: python-urllib3 (>= 1.7.1) but it is not installable
-      salt_bootstrap_url: https://bootstrap.saltstack.com/develop
-      salt_bootstrap_options: -P
-      dependencies:
-        - name: elasticsearch
-          path: ../elasticsearch-formula
+# - name: dependencies
+#    provisioner:
+#      # workaround for https://github.com/saltstack/salt-bootstrap/issues/632
+#      # python-requests : Depends: python-urllib3 (>= 1.7.1) but it is not installable
+#      salt_bootstrap_url: https://bootstrap.saltstack.com/develop
+#      salt_bootstrap_options: -P
+#      dependencies:
+#        - name: elasticsearch
+#          path: ../elasticsearch-formula
 
-  - name: vendor_path
-    provisioner:
-      vendor_path: ../sample-vendor-path
+#  - name: vendor_path
+#    provisioner:
+#      vendor_path: ../sample-vendor-path
 
-  - name: bad_vendor_path
-    provisioner:
-      vendor_path: ../missing-sample-vendor-path
+# TODO: Move to a light weight rspec test
+#  - name: bad_vendor_path
+#    provisioner:
+#      vendor_path: ../missing-sample-vendor-path
